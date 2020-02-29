@@ -17,7 +17,7 @@ public class BoardController {
 
     @GetMapping
     public Response<Board> getBoards(@RequestParam("page")int page) {
-        Page<Board> results = boardService.getBoards(page);
+        Page<Board> results = boardService.getBoards(page-1);
 
         return Response.<Board>builder()
                 .status(200)
@@ -35,6 +35,6 @@ public class BoardController {
 
     @PutMapping("/{id}")
     public void putBoard(@PathVariable("id")int boardId, @Valid @RequestBody Request request) {
-        boardService.putBoard(boardId, request);
+        boardService.updateBoard(boardId, request);
     }
 }

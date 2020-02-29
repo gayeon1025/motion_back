@@ -44,15 +44,22 @@ public class BoardService {
         return newBoard;
     }
 
-    public Board putBoard(int boardId, Request request) {
+    public Board updateBoard(int boardId, Request request) {
         Board previousBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ResourceNotFoundException(Exception.BOARD_NOT_FOUND));
+
+        // Remove previous attachments
+        attachmentService.deleteAttachmentsByPostId(previousBoard.getId());
+
+        // Save new attachments
+        attachmentService.registerAttachments(PostType.BOARD, previousBoard.getId(), request.getAttachments());
 
         Board newBoard = convertRequestIntoBoard(request);
 
         previousBoard.setTitle(newBoard.getTitle());
         previousBoard.setContents(newBoard.getContents());
-        return previousBoard;
+
+        return boardRepository.save(previousBoard);
     }
 
     public Board convertRequestIntoBoard(Request request) {
