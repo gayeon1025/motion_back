@@ -18,15 +18,12 @@ import java.time.LocalDateTime;
 public class Account {
 
     @Id
-    int id;
-
     @Length(min = 9, max = 9)
-    @Column(name = "student_id")
-    String studentId;
+    @Column(name = "id")
+    String id;
 
     Roll roll;
 
-    @Pattern(regexp = "[0-9]{3}-[0-9]{3,4}-[0-9]{4}")
     String phone;
 
     String email;

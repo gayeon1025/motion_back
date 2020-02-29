@@ -30,7 +30,7 @@ public class Board{
     String contents;
 
     @Column(name = "registrant_id")
-    int registrantId;
+    String registrantId;
 
     @Column(name = "registrant_name")
     String registrantName;
