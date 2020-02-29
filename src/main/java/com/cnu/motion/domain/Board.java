@@ -1,5 +1,6 @@
 package com.cnu.motion.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,9 +14,13 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
 @Table(name = "board")
 @EntityListeners(AuditingEntityListener.class)
 public class Board{
+
+    private Board() {}
+
     @Id
     int id;
 
@@ -24,8 +29,10 @@ public class Board{
 
     String contents;
 
+    @Column(name = "registrant_id")
     int registrantId;
 
+    @Column(name = "registrant_name")
     String registrantName;
 
     @CreatedDate
