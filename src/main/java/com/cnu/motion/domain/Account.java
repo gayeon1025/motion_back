@@ -1,6 +1,7 @@
 package com.cnu.motion.domain;
 
 import com.cnu.motion.common.type.Roll;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "account")
 @EntityListeners(AuditingEntityListener.class)
