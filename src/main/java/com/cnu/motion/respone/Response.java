@@ -8,8 +8,14 @@ import java.util.List;
 @Data
 @Builder
 public class Response<T> {
-    int numberOfTotalPages;
-    List<T> results;
-    boolean hasPreviousPage;
-    boolean hasNextPage;
+
+    private int status;
+
+    private int numberOfTotalPages;
+
+    private List<T> results;
+
+    private boolean hasPreviousPage;
+
+    private boolean hasNextPage;
 }
