@@ -12,10 +12,19 @@ import java.time.LocalDateTime;
 @Table(name = "attachment")
 @EntityListeners(AuditingEntityListener.class)
 public class Attachment {
+
+    public Attachment(PostType type, int postId, String path) {
+        this.type = type;
+        this.postId = postId;
+        this.path = path;
+    }
+
     @Id
     int id;
 
     PostType type;
+
+    int postId;
 
     String path;
 
