@@ -2,7 +2,10 @@ package com.cnu.motion.common.type;
 
 public enum Exception {
     ACCOUNT_NOT_FOUND("exception.account.not-found"),
-    BOARD_NOT_FOUND("exception.board.not-found");
+
+    // Board
+    BOARD_NOT_FOUND("exception.board.not-found"),
+    NOT_AUTHENTICATED_USER_FOR_DELETION("exception.board.not-authenticated-user-for-deletion");
 
     private String message;
 
