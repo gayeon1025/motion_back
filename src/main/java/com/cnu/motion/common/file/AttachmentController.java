@@ -18,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/files")
-public class FileManagementController {
+public class AttachmentController {
 
     @Value("${file.upload.path}")
     String uploadPath;
