@@ -21,4 +21,9 @@ public class AttachmentService {
             attachmentRepository.save(attachment);
         }
     }
+
+    @Transactional
+    public void deleteAttachmentsByPostId(int postId) {
+        attachmentRepository.deleteAllByPostId(postId);
+    }
 }
