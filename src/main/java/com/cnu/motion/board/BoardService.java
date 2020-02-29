@@ -1,6 +1,7 @@
 package com.cnu.motion.board;
 
 import com.cnu.motion.account.AccountService;
+import com.cnu.motion.common.exception.InvalidRequestException;
 import com.cnu.motion.common.exception.ResourceNotFoundException;
 import com.cnu.motion.common.file.AttachmentRepository;
 import com.cnu.motion.common.file.AttachmentService;
@@ -60,6 +61,26 @@ public class BoardService {
         previousBoard.setContents(newBoard.getContents());
 
         return boardRepository.save(previousBoard);
+    }
+
+    public void deleteBoard(int boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new ResourceNotFoundException(Exception.BOARD_NOT_FOUND));
+
+        // TODO : spring security로 변경
+//        if (canNotDelete(board, user)) {
+//            throw new InvalidRequestException(Exception.NOT_AUTHENTICATED_USER_FOR_DELETION);
+//        }
+
+        boardRepository.deleteById(boardId);
+    }
+
+    private boolean canNotDelete(Board board, String user) {
+        return !hasAuthorizationToDelete(board, user);
+    }
+
+    private boolean hasAuthorizationToDelete(Board board, String user) {
+        return (board.getRegistrantId().equals(user));
     }
 
     public Board convertRequestIntoBoard(Request request) {
