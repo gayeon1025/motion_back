@@ -11,9 +11,11 @@ public class Response<T> {
 
     private int status;
 
+    private int currentPage;
+
     private int numberOfTotalPages;
 
-    private List<T> results;
+    private List<T> items;
 
     private boolean hasPreviousPage;
 

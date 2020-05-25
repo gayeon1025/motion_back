@@ -9,34 +9,36 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController("/boards")
+@RestController
+@RequestMapping("/boards")
 public class BoardController {
 
     @Autowired
     BoardService boardService;
 
     @GetMapping
-    public Response<Board> getBoards(@RequestParam("page")int page) {
+    public Response<Board> getBoards(@RequestParam(value = "page", defaultValue = "1")int page) {
         Page<Board> results = boardService.getBoards(page-1);
 
         return Response.<Board>builder()
                 .status(200)
+                .currentPage(page)
                 .numberOfTotalPages(results.getTotalPages())
                 .hasPreviousPage(results.hasPrevious())
                 .hasNextPage(results.hasNext())
-                .results(results.getContent())
+                .items(results.getContent())
                 .build();
     }
 
-    @PostMapping
-    public void addBoard(@Valid @RequestBody Request request) {
-        boardService.addBoard(request);
-    }
-
-    @PutMapping("/{id}")
-    public void putBoard(@PathVariable("id")int boardId, @Valid @RequestBody Request request) {
-        boardService.updateBoard(boardId, request);
-    }
+//    @PostMapping
+//    public void addBoard(@Valid @RequestBody Request request) {
+//        boardService.addBoard(request);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public void putBoard(@PathVariable("id")int boardId, @Valid @RequestBody Request request) {
+//        boardService.updateBoard(boardId, request);
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteBoard(@PathVariable("id")int boardId) {

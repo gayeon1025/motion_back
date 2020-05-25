@@ -12,7 +12,7 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
-    public Account getAccountWithStudentId(String studentId) {
-        return accountRepository.findAccountByStudentId(studentId).orElseThrow(() -> new ResourceNotFoundException(Exception.ACCOUNT_NOT_FOUND));
+    public Account getAccountWithId(String id) {
+        return accountRepository.findAccountById(id).orElseThrow(() -> new ResourceNotFoundException(Exception.ACCOUNT_NOT_FOUND));
     }
 }

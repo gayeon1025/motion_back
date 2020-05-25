@@ -29,11 +29,12 @@ public class Board{
 
     String contents;
 
-    @Column(name = "registrant_id")
-    String registrantId;
+//    @Column(name = "registrant_id")
+//    String registrantId;
 
-    @Column(name = "registrant_name")
-    String registrantName;
+    @OneToOne
+    @JoinColumn(name = "author")
+    Account author;
 
     @CreatedDate
     @Column(name = "created_at")

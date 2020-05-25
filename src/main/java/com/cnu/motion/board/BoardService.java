@@ -36,32 +36,32 @@ public class BoardService {
         return boardRepository.findAll(pageRequest);
     }
 
-    public Board addBoard(Request request) {
-       Board newBoard = boardRepository.save(convertRequestIntoBoard(request));
+//    public Board addBoard(Request request) {
+//       Board newBoard = boardRepository.save(convertRequestIntoBoard(request));
+//
+//       // Register attachments
+//        attachmentService.registerAttachments(PostType.BOARD, newBoard.getId(), request.getAttachments());
+//
+//        return newBoard;
+//    }
 
-       // Register attachments
-        attachmentService.registerAttachments(PostType.BOARD, newBoard.getId(), request.getAttachments());
-
-        return newBoard;
-    }
-
-    public Board updateBoard(int boardId, Request request) {
-        Board previousBoard = boardRepository.findById(boardId)
-                .orElseThrow(() -> new ResourceNotFoundException(Exception.BOARD_NOT_FOUND));
-
-        // Remove previous attachments
-        attachmentService.deleteAttachmentsByPostId(previousBoard.getId());
-
-        // Save new attachments
-        attachmentService.registerAttachments(PostType.BOARD, previousBoard.getId(), request.getAttachments());
-
-        Board newBoard = convertRequestIntoBoard(request);
-
-        previousBoard.setTitle(newBoard.getTitle());
-        previousBoard.setContents(newBoard.getContents());
-
-        return boardRepository.save(previousBoard);
-    }
+//    public Board updateBoard(int boardId, Request request) {
+//        Board previousBoard = boardRepository.findById(boardId)
+//                .orElseThrow(() -> new ResourceNotFoundException(Exception.BOARD_NOT_FOUND));
+//
+//        // Remove previous attachments
+//        attachmentService.deleteAttachmentsByPostId(previousBoard.getId());
+//
+//        // Save new attachments
+//        attachmentService.registerAttachments(PostType.BOARD, previousBoard.getId(), request.getAttachments());
+//
+//        Board newBoard = convertRequestIntoBoard(request);
+//
+//        previousBoard.setTitle(newBoard.getTitle());
+//        previousBoard.setContents(newBoard.getContents());
+//
+//        return boardRepository.save(previousBoard);
+//    }
 
     public void deleteBoard(int boardId) {
         Board board = boardRepository.findById(boardId)
@@ -75,22 +75,22 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
 
-    private boolean canNotDelete(Board board, String user) {
-        return !hasAuthorizationToDelete(board, user);
-    }
+//    private boolean canNotDelete(Board board, String user) {
+//        return !hasAuthorizationToDelete(board, user);
+//    }
 
-    private boolean hasAuthorizationToDelete(Board board, String user) {
-        return (board.getRegistrantId().equals(user));
-    }
+//    private boolean hasAuthorizationToDelete(Board board, String user) {
+//        return (board.getRegistrantId().equals(user));
+//    }
 
-    public Board convertRequestIntoBoard(Request request) {
-        Account account = accountService.getAccountWithStudentId(request.getStudentId());
-
-        return Board.builder()
-                .registrantId(account.getId())
-                .registrantName(account.getName())
-                .title(request.getTitle())
-                .contents(request.getContents())
-                .build();
-    }
+//    public Board convertRequestIntoBoard(Request request) {
+//        Account account = accountService.getAccountWithId(request.getStudentId());
+//
+//        return Board.builder()
+//                .registrantId(account.getId())
+//                .registrantName(account.getName())
+//                .title(request.getTitle())
+//                .contents(request.getContents())
+//                .build();
+//    }
 }
