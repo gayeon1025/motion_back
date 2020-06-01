@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class Response<T> {
+public class ListResponse<T> {
 
     private int status;
 

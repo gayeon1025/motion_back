@@ -1,13 +1,10 @@
 package com.cnu.motion.board;
 
 import com.cnu.motion.domain.Board;
-import com.cnu.motion.request.Request;
-import com.cnu.motion.respone.Response;
+import com.cnu.motion.respone.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/boards")
@@ -17,10 +14,10 @@ public class BoardController {
     BoardService boardService;
 
     @GetMapping
-    public Response<Board> getBoards(@RequestParam(value = "page", defaultValue = "1")int page) {
+    public ListResponse<Board> getBoards(@RequestParam(value = "page", defaultValue = "1")int page) {
         Page<Board> results = boardService.getBoards(page-1);
 
-        return Response.<Board>builder()
+        return ListResponse.<Board>builder()
                 .status(200)
                 .currentPage(page)
                 .numberOfTotalPages(results.getTotalPages())
@@ -28,6 +25,11 @@ public class BoardController {
                 .hasNextPage(results.hasNext())
                 .items(results.getContent())
                 .build();
+    }
+
+    @GetMapping("{boardId}")
+    public Board getBoard(@PathVariable(value = "boardId")int boardId) {
+        return boardService.getBoard(boardId);
     }
 
 //    @PostMapping

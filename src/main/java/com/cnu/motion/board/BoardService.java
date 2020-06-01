@@ -36,6 +36,10 @@ public class BoardService {
         return boardRepository.findAll(pageRequest);
     }
 
+    public Board getBoard(int boardId) {
+        return boardRepository.findById(boardId).orElseThrow(() -> new ResourceNotFoundException(Exception.BOARD_NOT_FOUND));
+    }
+
 //    public Board addBoard(Request request) {
 //       Board newBoard = boardRepository.save(convertRequestIntoBoard(request));
 //
