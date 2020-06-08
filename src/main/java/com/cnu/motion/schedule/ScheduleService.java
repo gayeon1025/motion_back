@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,9 +25,9 @@ public class ScheduleService {
         return scheduleRepository.findAllByStartAtBetweenOrEndAtBetween(start, end, start, end);
     }
 
+    @Transactional
     public Schedule addSchedule(Schedule schedule) {
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        logger.info("Success to save schedule: ", savedSchedule.getId());
         return savedSchedule;
     }
 }

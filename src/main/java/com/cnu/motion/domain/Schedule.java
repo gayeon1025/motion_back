@@ -1,10 +1,12 @@
 package com.cnu.motion.domain;
 
 import com.cnu.motion.common.deserializer.ScheduleDeserializer;
+import com.cnu.motion.common.serializer.ScheduleSerializer;
 import com.cnu.motion.common.type.ScheduleRaw;
 import com.cnu.motion.common.type.ScheduleState;
 import com.cnu.motion.common.type.ScheduleType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,9 +22,11 @@ import java.time.LocalDateTime;
 @Table(name = "schedule")
 @EntityListeners(AuditingEntityListener.class)
 @JsonDeserialize(using = ScheduleDeserializer.class)
+@JsonSerialize(using = ScheduleSerializer.class)
 public class Schedule {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     int id;
 
     ScheduleType type;
