@@ -34,8 +34,13 @@ public class ScheduleDeserializer extends StdDeserializer<Schedule> {
         String title = input.get("title").asText();
         schedule.setTitle(title);
 
-        String location = input.get("location").asText();
-        schedule.setLocation(location);
+        JsonNode locationNode = input.get("location");
+        if (locationNode != null) {
+            schedule.setLocation(locationNode.asText());
+        }
+        else {
+            schedule.setLocation("");
+        }
 
         JsonNode start = input.get("start").get("_date");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
@@ -52,6 +57,8 @@ public class ScheduleDeserializer extends StdDeserializer<Schedule> {
         JsonNode raw = input.get("raw").get("class");
         schedule.setRaw(ScheduleRaw.valueOf(raw.asText().toUpperCase()));
 
+        Boolean isAllDay = input.get("isAllDay").asBoolean();
+        schedule.setAllDay(isAllDay);
         return schedule;
     }
 }
