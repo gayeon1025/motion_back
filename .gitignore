@@ -1,5 +1,5 @@
-lib/
-out/
+### lib/
+### out/
 HELP.md
 .gradle
 build/

@@ -28,37 +28,52 @@ public class ScheduleDeserializer extends StdDeserializer<Schedule> {
         JsonNode input = mapper.readTree(parser);
         Schedule schedule = new Schedule();
 
-        int type = input.get("calendarId").asInt();
-        schedule.setType(ScheduleType.getType(type));
+        JsonNode type = input.get("calendarId");
+        if (type != null) {
+            schedule.setType(ScheduleType.getType(type.asInt()));
+        }
 
-        String title = input.get("title").asText();
-        schedule.setTitle(title);
+        JsonNode title = input.get("title");
+        if (title != null) {
+            schedule.setTitle(title.asText());
+        }
 
         JsonNode locationNode = input.get("location");
         if (locationNode != null) {
             schedule.setLocation(locationNode.asText());
         }
         else {
-            schedule.setLocation("");
+            schedule.setLocation(null);
         }
 
-        JsonNode start = input.get("start").get("_date");
+        JsonNode start = input.get("start");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
-        LocalDateTime startAt = LocalDateTime.parse(start.asText(), formatter).plusHours(9); // convert utc to kst
-        schedule.setStartAt(startAt);
+        if (start != null) {
+            LocalDateTime startAt = LocalDateTime.parse(start.get("_date").asText(), formatter).plusHours(9); // convert utc to kst
+            schedule.setStartAt(startAt);
+        }
 
-        JsonNode end = input.get("end").get("_date");
-        LocalDateTime endAt = LocalDateTime.parse(end.asText(), formatter).plusHours(9); // convert utc to kst
-        schedule.setEndAt(endAt);
+        JsonNode end = input.get("end");
+        if (end != null) {
+            LocalDateTime endAt = LocalDateTime.parse(end.get("_date").asText(), formatter).plusHours(9); // convert utc to kst
+            schedule.setEndAt(endAt);
+        }
 
         JsonNode state = input.get("state");
-        schedule.setState(ScheduleState.valueOf(state.asText().toUpperCase()));
+        if (state != null) {
+            schedule.setState(ScheduleState.valueOf(state.asText().toUpperCase()));
+        }
 
-        JsonNode raw = input.get("raw").get("class");
-        schedule.setRaw(ScheduleRaw.valueOf(raw.asText().toUpperCase()));
+        JsonNode raw = input.get("raw");
+        if (raw != null) {
+            schedule.setRaw(ScheduleRaw.valueOf(raw.get("class").asText().toUpperCase()));
+        }
 
-        Boolean isAllDay = input.get("isAllDay").asBoolean();
-        schedule.setAllDay(isAllDay);
+        JsonNode isAllDay = input.get("isAllDay");
+        if (isAllDay != null) {
+            schedule.setAllDay(isAllDay.asBoolean());
+        }
+
         return schedule;
     }
 }

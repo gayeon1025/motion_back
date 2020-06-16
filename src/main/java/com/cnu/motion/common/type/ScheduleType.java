@@ -1,8 +1,8 @@
 package com.cnu.motion.common.type;
 
 public enum ScheduleType {
-    DEPARTMENT_EVENT(0),
-    CLUB_EVENT(1);
+    DEPARTMENT_EVENT(1),
+    CLUB_EVENT(2);
 
     private int value;
     ScheduleType(int value) {
